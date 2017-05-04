@@ -1,0 +1,126 @@
+---
+title: "Assignment_1"
+author: "Wagner Quiros Pereira"
+date: "4/25/2017"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown Practice
+
+**Monthly precipitation**
+
+```{r clim, fig.align='center'}
+climate = read.table("clim.txt", header=T)
+boxplot(climate$rain~climate$month,
+  ylab="Precipitation/inches",
+  xlab="Month", col="blue")
+```
+
+***
+**Monthly minimum average temperature**
+
+```{r clim2, fig.align='center'}
+climate = read.table("clim.txt", header=T)
+boxplot(climate$tmin~climate$month,
+  ylab="Average of Minimum Temperature/Fahrenheit",
+  xlab="Month", col="lightblue")
+```
+
+***
+**Monthly maximum average temperature**
+
+```{r clim3, fig.align='center'}
+climate = read.table("clim.txt", header=T)
+boxplot(climate$tmax~climate$month,
+  ylab="Average of Maximum Temperature/Fahrenheit",
+  xlab="Month", col="blue")
+```
+
+***
+**Annual rain A**
+
+```{r clim4, fig.align='center'}
+rainfall= read.table("clim.txt", header=T)
+boxplot(rainfall$rain~rainfall$year,
+  ylab="Precipitation/inches/year",
+  xlab="Year", col="orange")
+```
+
+***
+**Annual Mean Rainfall**
+
+```{r climX, fig.align='center'}
+YearMeanST <- aggregate (rainfall$rain ~ year, data = rainfall, FUN = function(x) {c(MEAN = mean(x), SD= sd (x))})
+names(YearMeanST) 
+YearMeanSTTable <- do.call(data.frame, YearMeanST)
+colnames(YearMeanSTTable) <- c("Year", "Mean", "SD")
+View(YearMeanSTTable)
+boxplot(YearMeanSTTable$Mean~YearMeanSTTable$Year,
+ ylab="Average Precipitation/inches/year",
+ xlab="Year", col="blue")
+```
+
+***
+**Wettest year using the mean**
+
+```{r clim6}
+result=which.max(YearMeanSTTable$Mean)
+YearMeanSTTable[result,]
+```
+
+***
+**Driest year using the mean**
+
+```{r clim7}
+result=which.min(YearMeanSTTable$Mean)
+YearMeanSTTable[result,]
+```
+
+***
+
+**Wet and Dry Season Picture from Guanacaste, Costa Rica. Tropical Dry Forest**
+
+<div align="center">
+<img src="Guanacaste.jpg" height=400>
+</div>
+
+***
+**Subsetting seasons**
+
+```{r clim8, fig.align='center'}
+View(climate)
+range(climate$month)
+climate$period <- ifelse(climate$month %in% c(3,4,5),"Spring",
+ifelse(climate$month %in% c(6,7,8), "Summer",
+ifelse(climate$month %in% c(9,10,11), "Fall", "Winter")))
+boxplot(climate$rain~climate$period,
+ylab="Mean Precipitation/inches/year",
+xlab="Year", col="blue")
+```
+
+***
+```{r clim9, fig.align='center'}
+SeasonMeanSD <- aggregate (climate$rain ~ period, data = climate, FUN = function(x) {c(MEAN = mean(x), SD= sd (x))})
+names(SeasonMeanSD)
+SeasonMeanSTTable <- do.call(data.frame, SeasonMeanSD)
+colnames(SeasonMeanSTTable) <- c("Period", "Mean", "SD")
+View(SeasonMeanSTTable)
+boxplot(SeasonMeanSTTable$Mean~SeasonMeanSTTable$Period,
+ ylab="Average Precipitation/inches/year",
+ xlab="Period", col="blue")
+```
+
+***
+**Driest season using the mean**
+```{r clim10}
+result=which.min(SeasonMeanSD$`climate$rain`)
+SeasonMeanSD[result,]
+```
+
+
+
+
