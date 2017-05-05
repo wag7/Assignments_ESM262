@@ -121,7 +121,7 @@ result=which.min(SeasonMeanSD$`climate$rain`)
 SeasonMeanSD[result,]
 ```
 
-**Seasonal Variability**
+**Summer temperature and winter rain variability per month**
 ```{r clim11}
 clim_data$date <- as.Date (clim_data$date, format = "%m/%d/%y")
 install.packages(doBy)
@@ -134,18 +134,19 @@ monthly_temp_average <- summaryBy(climate$tmax ~ climate$month, FUN = mean, data
 colnames (monthly_temp_average) <- c("month", "avg_monthly_temp")
 View(monthly_temp_average)
 
-
 RainandTemp_table <- data.frame (monthly_rain_average, monthly_temp_average)
 View(RainandTemp_table)
- RainandTemp_table$month<- c("Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec")
+ RainandTemp_table$month<- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+ View(RainandTemp_table)
 
- 
+
 Final_plot <- ggplot (RainandTemp_table) +
-  geom_point(aes(x = month, y =  ))
-  geom_point(aes(x = month, y = avg_monthly_temp), col = "blue")+
-  geom_point(aes(x = month, y = avg_monthly_rain), col = "red")+
+  geom_point(aes(x = month, y = avg_monthly_temp), col = "orange")+
+  geom_point(aes(x = month, y = avg_monthly_rain), col = "blue")+
   theme_classic(base_size = 16)+
     theme(legend.position = "bottom")+
-  labs(x = "Month", y = "Magnitude")
+  labs(x = "Month", y = "Average Value")
+  
+Final_plot
 ```
 
