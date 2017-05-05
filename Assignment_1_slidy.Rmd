@@ -2,7 +2,7 @@
 title: "Assignment_1"
 author: "Wagner Quiros Pereira"
 date: "4/25/2017"
-output: slidy_document
+output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +19,7 @@ boxplot(climate$rain~climate$month,
   ylab="Precipitation/inches",
   xlab="Month", col="blue")
 ```
+**We observe how the summer months from June to August, (6,7 and 8 respectively) show the lowest precipitation in inches*
 
 ***
 **Monthly minimum average temperature**
@@ -30,6 +31,8 @@ boxplot(climate$tmin~climate$month,
   xlab="Month", col="lightblue")
 ```
 
+**The lowest temperature averages using historical minimum documented values are observed during the summer months from June to August (6,7,8 respectively)*
+
 ***
 **Monthly maximum average temperature**
 
@@ -39,6 +42,8 @@ boxplot(climate$tmax~climate$month,
   ylab="Average of Maximum Temperature/Fahrenheit",
   xlab="Month", col="blue")
 ```
+
+**The highest temperature averages using historical minimum documented values are observed during the summer months from June to August (6,7,8 respectively)*
 
 ***
 **Annual rain A**
@@ -72,6 +77,8 @@ result=which.max(YearMeanSTTable$Mean)
 YearMeanSTTable[result,]
 ```
 
+**The historically wettest year between 1942 to 2016 was 1982*
+
 ***
 **Driest year using the mean**
 
@@ -79,6 +86,8 @@ YearMeanSTTable[result,]
 result=which.min(YearMeanSTTable$Mean)
 YearMeanSTTable[result,]
 ```
+
+**The historically driest year from 1942 to 2016 was 2013*
 
 ***
 
@@ -120,7 +129,21 @@ boxplot(SeasonMeanSTTable$Mean~SeasonMeanSTTable$Period,
 result=which.min(SeasonMeanSD$`climate$rain`)
 SeasonMeanSD[result,]
 ```
+***
+**Summer temperature and winter rain variability per month**
 
+```{r clim13, fig.align='center'}
+library(ggplot2)
+TempRain = read.table("RainTemp.txt", header=T)
+View(TempRain)
 
-
-
+Final_plot <- ggplot (TempRain) +
+  geom_point(aes(x = month, y = avg_monthly_temp), col = "orange")+
+  geom_point(aes(x = month, y = avg_monthly_rain), col = "blue")+
+  theme_classic(base_size = 10)+
+    theme(legend.position = "bottom")+
+  labs(x = "Month", y = "Average Value")
+  
+Final_plot
+```
+**We can observe how during the summer months (May, June, July, August) values of rain (in blue) are low while values of temperature (in orange) are high. In the other hand during winter seasons rain and temperature magnitudes come close*

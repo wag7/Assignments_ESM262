@@ -19,7 +19,7 @@ boxplot(climate$rain~climate$month,
   ylab="Precipitation/inches",
   xlab="Month", col="blue")
 ```
-*We observe how the summer months from June to August, (6,7 and 8 respectively) show the lowest precipitation in inches*
+**We observe how the summer months from June to August, (6,7 and 8 respectively) show the lowest precipitation in inches*
 
 ***
 **Monthly minimum average temperature**
@@ -31,7 +31,7 @@ boxplot(climate$tmin~climate$month,
   xlab="Month", col="lightblue")
 ```
 
-*The lowest temperature averages using historical minimum documented values are observed during the summer months from June to August (6,7,8 respectively)*
+**The lowest temperature averages using historical minimum documented values are observed during the summer months from June to August (6,7,8 respectively)*
 
 ***
 **Monthly maximum average temperature**
@@ -77,7 +77,7 @@ result=which.max(YearMeanSTTable$Mean)
 YearMeanSTTable[result,]
 ```
 
-*The historically wettest year between 1942 to 2016 was 1982*
+**The historically wettest year between 1942 to 2016 was 1982*
 
 ***
 **Driest year using the mean**
@@ -146,4 +146,4 @@ Final_plot <- ggplot (TempRain) +
   
 Final_plot
 ```
-*We can observe how during the summer months (May, June, July, August) values of rain (in blue) are low while values of temperature (in orange) are high. In the other hand during winter seasons rain and temperature magnitudes come close*
+**We can observe how during the summer months (May, June, July, August) values of rain (in blue) are low while values of temperature (in orange) are high. In the other hand during winter seasons rain and temperature magnitudes come close*
