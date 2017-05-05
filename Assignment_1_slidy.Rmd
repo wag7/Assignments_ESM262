@@ -2,7 +2,7 @@
 title: "Assignment_1"
 author: "Wagner Quiros Pereira"
 date: "4/25/2017"
-output: pdf_document
+output: slidy_document
 ---
 
 ```{r setup, include=FALSE}
