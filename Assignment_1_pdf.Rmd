@@ -2,7 +2,7 @@
 title: "Assignment_1"
 author: "Wagner Quiros Pereira"
 date: "4/25/2017"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -120,27 +120,15 @@ boxplot(SeasonMeanSTTable$Mean~SeasonMeanSTTable$Period,
 result=which.min(SeasonMeanSD$`climate$rain`)
 SeasonMeanSD[result,]
 ```
-
+***
 **Summer temperature and winter rain variability per month**
-```{r clim11}
-clim_data$date <- as.Date (clim_data$date, format = "%m/%d/%y")
-install.packages(doBy)
-library(doBy)
-monthly_rain_average <- summaryBy(climate$rain ~climate$month, FUN = mean, data = climate)
-colnames (monthly_rain_average) <- c("month", "avg_monthly_rain")
-View(monthly_rain_average)
 
-monthly_temp_average <- summaryBy(climate$tmax ~ climate$month, FUN = mean, data = climate)
-colnames (monthly_temp_average) <- c("month", "avg_monthly_temp")
-View(monthly_temp_average)
+```{r clim13}
+library(ggplot2)
+TempRain = read.table("RainTemp.txt", header=T)
+View(TempRain)
 
-RainandTemp_table <- data.frame (monthly_rain_average, monthly_temp_average)
-View(RainandTemp_table)
- RainandTemp_table$month<- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
- View(RainandTemp_table)
-
-
-Final_plot <- ggplot (RainandTemp_table) +
+Final_plot <- ggplot (TempRain) +
   geom_point(aes(x = month, y = avg_monthly_temp), col = "orange")+
   geom_point(aes(x = month, y = avg_monthly_rain), col = "blue")+
   theme_classic(base_size = 16)+

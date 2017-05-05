@@ -1,0 +1,18 @@
+Initial Code for last figure. Assignment 1. Infographics from where I got the table.
+
+install.packages("doBy")
+library(doBy)
+library(ggplot2)
+
+monthly_rain_average <- summaryBy(climate$rain ~climate$month, FUN = mean, data = climate)
+colnames (monthly_rain_average) <- c("month", "avg_monthly_rain")
+View(monthly_rain_average)
+
+monthly_temp_average <- summaryBy(climate$tmax ~ climate$month, FUN = mean, data = climate)
+colnames (monthly_temp_average) <- c("month", "avg_monthly_temp")
+View(monthly_temp_average)
+
+RainandTemp_table <- data.frame (monthly_rain_average, monthly_temp_average)
+View(RainandTemp_table)
+ RainandTemp_table$month<- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+write.csv(RainandTemp_table, file = "RainTemp.csv")
