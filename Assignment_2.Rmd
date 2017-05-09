@@ -1,0 +1,37 @@
+---
+title: "Assignment_2.Informatics."
+author: "Wagner Quiros Pereira"
+date: "5/9/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ESM ASSIGNMENT 2, Data Ingest.
+
+```{r}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(dplyr)
+})
+gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
+  as_tibble(gaz_raw_)
+  colnames(gaz_raw_) [1] <- "ID"
+  gaz -> select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
+```
+
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
