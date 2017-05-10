@@ -10,8 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## ESM ASSIGNMENT 2, Data Ingest.
+**1. Reading the gazetteer data as-is (all columns; no type conversion) into a gaz_raw tibble and keeping only specific columns**
 
-```{r}
+```{r 1}
 suppressPackageStartupMessages({
   library(tidyverse)
   library(dplyr)
@@ -19,9 +20,43 @@ suppressPackageStartupMessages({
 gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
   as_tibble(gaz_raw_)
   colnames(gaz_raw_) [1] <- "ID"
-  gaz -> select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
+gaz <- select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
+as_tibble(gaz)
 ```
 
+**2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
+
+```{r 2}
+gaz$PRIM_LAT_DEC<- parse_character(gaz$PRIM_LAT_DEC, na="0")
+gaz$PRIM_LONG_DEC<- parse_character(gaz$PRIM_LONG_DEC, na="0")
+View(gaz)
+```
+
+**3. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
+
+```{r 3}
+gaz$PRIM_LAT_DEC<- parse_character(gaz$PRIM_LAT_DEC, na="0")
+gaz$PRIM_LONG_DEC<- parse_character(gaz$PRIM_LONG_DEC, na="0")
+View(gaz)
+```
+
+**4. Delete from gaz rows where:**
+*The primary latitude or longitude are unknown
+*The feature is not in California
+
+```{r 4}
+gaz_na <- gaz %>% 
+  spread(year, return) %>% 
+  gather(year, return, `2015`:`2016`, na.rm = TRUE)
+View(X)
+```
+
+**5. Write the gaz tibble to a CSV files (using "|" as a delimiter)**
+
+```{r 5}
+
+
+```
 
 
 

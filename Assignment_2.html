@@ -123,11 +123,77 @@ $(document).ready(function () {
 </div>
 
 
-<div id="esm-262-data-ingest." class="section level2">
-<h2>ESM 262 Data Ingest.</h2>
+<div id="esm-assignment-2-data-ingest." class="section level2">
+<h2>ESM ASSIGNMENT 2, Data Ingest.</h2>
+<p><strong>1. Reading the gazetteer data as-is (all columns; no type conversion) into a gaz_raw tibble and keeping only specific columns</strong></p>
 <pre class="r"><code>suppressPackageStartupMessages({
   library(tidyverse)
-})</code></pre>
+  library(dplyr)
+})
+gaz_raw_&lt;- read_delim(&quot;CA_Features_20170401.zip&quot;, delim = &quot;|&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   `﻿FEATURE_ID` = col_integer(),
+##   PRIM_LAT_DEC = col_double(),
+##   PRIM_LONG_DEC = col_double(),
+##   SOURCE_LAT_DEC = col_double(),
+##   SOURCE_LONG_DEC = col_double(),
+##   ELEV_IN_M = col_integer(),
+##   ELEV_IN_FT = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>  as_tibble(gaz_raw_)</code></pre>
+<pre><code>## # A tibble: 122,051 × 20
+##    `﻿FEATURE_ID`                      FEATURE_NAME FEATURE_CLASS
+##           &lt;int&gt;                             &lt;chr&gt;         &lt;chr&gt;
+## 1          2928                     Cibola Bridge        Bridge
+## 2          6185 Imperial National Wildlife Refuge          Park
+## 3          8164                     Mohave Canyon        Valley
+## 4          8174                     Mohave Valley        Valley
+## 5          9144                    Palo Verde Dam           Dam
+## 6          9146                 Palo Verde Intake        Locale
+## 7          9227                     Parker Valley        Valley
+## 8         12628                      Topock Gorge        Valley
+## 9         14114                   Yuma Main Canal         Canal
+## 10        22751   Cibola National Wildlife Refuge          Park
+## # ... with 122,041 more rows, and 17 more variables: STATE_ALPHA &lt;chr&gt;,
+## #   STATE_NUMERIC &lt;chr&gt;, COUNTY_NAME &lt;chr&gt;, COUNTY_NUMERIC &lt;chr&gt;,
+## #   PRIMARY_LAT_DMS &lt;chr&gt;, PRIM_LONG_DMS &lt;chr&gt;, PRIM_LAT_DEC &lt;dbl&gt;,
+## #   PRIM_LONG_DEC &lt;dbl&gt;, SOURCE_LAT_DMS &lt;chr&gt;, SOURCE_LONG_DMS &lt;chr&gt;,
+## #   SOURCE_LAT_DEC &lt;dbl&gt;, SOURCE_LONG_DEC &lt;dbl&gt;, ELEV_IN_M &lt;int&gt;,
+## #   ELEV_IN_FT &lt;int&gt;, MAP_NAME &lt;chr&gt;, DATE_CREATED &lt;chr&gt;,
+## #   DATE_EDITED &lt;chr&gt;</code></pre>
+<pre class="r"><code>  colnames(gaz_raw_) [1] &lt;- &quot;ID&quot;
+gaz &lt;- select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
+as_tibble(gaz)</code></pre>
+<pre><code>## # A tibble: 122,051 × 13
+##       ID                      FEATURE_NAME FEATURE_CLASS STATE_ALPHA
+##    &lt;int&gt;                             &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;
+## 1   2928                     Cibola Bridge        Bridge          AZ
+## 2   6185 Imperial National Wildlife Refuge          Park          CA
+## 3   8164                     Mohave Canyon        Valley          AZ
+## 4   8174                     Mohave Valley        Valley          AZ
+## 5   9144                    Palo Verde Dam           Dam          AZ
+## 6   9146                 Palo Verde Intake        Locale          AZ
+## 7   9227                     Parker Valley        Valley          AZ
+## 8  12628                      Topock Gorge        Valley          AZ
+## 9  14114                   Yuma Main Canal         Canal          AZ
+## 10 22751   Cibola National Wildlife Refuge          Park          AZ
+## # ... with 122,041 more rows, and 9 more variables: COUNTY_NAME &lt;chr&gt;,
+## #   PRIM_LAT_DEC &lt;dbl&gt;, PRIM_LONG_DEC &lt;dbl&gt;, SOURCE_LAT_DEC &lt;dbl&gt;,
+## #   SOURCE_LONG_DEC &lt;dbl&gt;, ELEV_IN_M &lt;int&gt;, MAP_NAME &lt;chr&gt;,
+## #   DATE_CREATED &lt;chr&gt;, DATE_EDITED &lt;chr&gt;</code></pre>
+<p><strong>2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA</strong></p>
+<pre class="r"><code>gaz$PRIM_LAT_DEC&lt;- parse_character(gaz$PRIM_LAT_DEC, na=&quot;0&quot;)
+gaz$PRIM_LONG_DEC&lt;- parse_character(gaz$PRIM_LONG_DEC, na=&quot;0&quot;)
+View(gaz)</code></pre>
+<p><strong>3. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA</strong></p>
+<pre class="r"><code>gaz$PRIM_LAT_DEC&lt;- parse_character(gaz$PRIM_LAT_DEC, na=&quot;0&quot;)
+gaz$PRIM_LONG_DEC&lt;- parse_character(gaz$PRIM_LONG_DEC, na=&quot;0&quot;)
+View(gaz)</code></pre>
+<p><strong>4. Delete from gaz rows where:</strong> <em>The primary latitude or longitude are unknown </em>The feature is not in California</p>
+<p><strong>5. Write the gaz tibble to a CSV files (using “|” as a delimiter)</strong></p>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
