@@ -9,7 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## ESM ASSIGNMENT 2, Data Ingest.
+## ESM ASSIGNMENT 2.
+
+##Part1. Data Ingest.
+
 **1. Reading the gazetteer data as-is (all columns; no type conversion) into a gaz_raw tibble and keeping only specific columns**
 
 ```{r 1}
@@ -32,34 +35,29 @@ gaz$PRIM_LONG_DEC<- parse_character(gaz$PRIM_LONG_DEC, na="0")
 View(gaz)
 ```
 
-**3. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
-
-```{r 3}
-gaz$PRIM_LAT_DEC<- parse_character(gaz$PRIM_LAT_DEC, na="0")
-gaz$PRIM_LONG_DEC<- parse_character(gaz$PRIM_LONG_DEC, na="0")
-View(gaz)
-```
-
 **4. Delete from gaz rows where:**
+
 *The primary latitude or longitude are unknown
 *The feature is not in California
 
 ```{r 4}
-gaz_na <- gaz %>% 
-  spread(year, return) %>% 
-  gather(year, return, `2015`:`2016`, na.rm = TRUE)
-View(X)
+setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Assignments_ESM262")
+cleangaz <- gaz %>%
+filter(STATE_ALPHA %in% c("CA")) 
+View(cleangaz)
 ```
 
 **5. Write the gaz tibble to a CSV files (using "|" as a delimiter)**
 
 ```{r 5}
-
-
+View(cleangaz)
+finalgaz <- read_csv("cleangaz.txt")
 ```
 
+##Part1. Analyze.
+```{r 6}
 
-
+```
 
 ## Including Plots
 
