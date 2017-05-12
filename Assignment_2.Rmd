@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages({
   library(tidyverse)
   library(dplyr)
+  library(magrittr)
 })
 gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
   as_tibble(gaz_raw_)
@@ -71,24 +72,12 @@ Common_feature_class[which.min(Common_feature_class$n), 1]
 **3.What is the approximate center point of each county ?**
 
 ```{r 7}
-center_county -> cleangaz %>%
-  group_by(COUNTY_NAME) %>%
-  summarise(latitude = mean(PRIM_LONG_DEC, na.rm = TRUE),
-            longitude = mean(PRIM_LAT_DEC, na.rm = TRUE),
-            longmax = max(PRIM_LONG_DEC, na.rm = TRUE),
-            longmin = min(PRIM_LAT_DEC, na.rm = TRUE),
-            latmax = max(PRIM_LONG_DEC, na.rm = TRUE),
-            latmin = min(PRIM_LAT_DEC, na.rm = TRUE),
-            lat = (latmax + latmin)/2,
-            long = (longmax + longmin)/2) %>% 
-  select(-c(longmax, latmax, longmin, latmin))
+setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/")
+View(cleangaz)
+write_csv(cleangaz, "CAGAZ.csv")
 
-```
-
-```{r 7}
-
-county_center <- cleangaz
- county_center <- group_by(COUNTY_NAME)
+county_point <- cleangaz
+ group_by(COUNTY_NAME) %>%
   summarise(
     latMin = min(PRIM_LAT_DEC, na.rm= TRUE),
     latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
@@ -98,10 +87,19 @@ county_center <- cleangaz
   mutate(long_center = (longMin + longMax)/2) %>% 
   select(County = COUNTY_NAME, Latitud = lat_center, 
          Longitude= long_center)
+
 ```
 
 
 
+
+```{r 8}
+
+
+
+```
+
+  
 ## Including Plots
 
 You can also embed plots, for example:
