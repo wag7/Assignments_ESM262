@@ -132,6 +132,7 @@ $(document).ready(function () {
 <pre class="r"><code>suppressPackageStartupMessages({
   library(tidyverse)
   library(dplyr)
+  library(magrittr)
 })
 gaz_raw_&lt;- read_delim(&quot;CA_Features_20170401.zip&quot;, delim = &quot;|&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
@@ -193,13 +194,29 @@ gaz$PRIM_LONG_DEC&lt;- parse_character(gaz$PRIM_LONG_DEC, na=&quot;0&quot;)
 View(gaz)</code></pre>
 <p><strong>4. Delete from gaz rows where:</strong></p>
 <p><em>The primary latitude or longitude are unknown </em>The feature is not in California</p>
-<pre class="r"><code>setwd(&quot;/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Assignments_ESM262&quot;)
-cleangaz &lt;- gaz %&gt;%
+<pre class="r"><code>cleangaz &lt;- gaz %&gt;%
 filter(STATE_ALPHA %in% c(&quot;CA&quot;)) 
 View(cleangaz)</code></pre>
 </div>
 <div id="part1.-analyze." class="section level2">
 <h2>Part1. Analyze.</h2>
+<p><strong>1.What is the most-frequently-occuring feature name ?</strong></p>
+<pre class="r"><code>Common_feature_name &lt;- count(cleangaz, FEATURE_NAME)
+Common_feature_name[which.max(Common_feature_name$n), 1]</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##       FEATURE_NAME
+##              &lt;chr&gt;
+## 1 Church of Christ</code></pre>
+<p><em>The most frequestly ocurring feature name is the church of Christ</em></p>
+<p><strong>2.What is the most-frequently-occuring feature class ?</strong></p>
+<pre class="r"><code>Common_feature_class &lt;- count(cleangaz, FEATURE_CLASS)
+Common_feature_class[which.min(Common_feature_class$n), 1]</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   FEATURE_CLASS
+##           &lt;chr&gt;
+## 1       Isthmus</code></pre>
+<p>**The most frequestly ocurring feature class is Isthmus*</p>
+<p><strong>3.What is the approximate center point of each county CPC ?</strong></p>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>

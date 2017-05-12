@@ -42,7 +42,6 @@ View(gaz)
 *The feature is not in California
 
 ```{r 4}
-setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Assignments_ESM262")
 cleangaz <- gaz %>%
 filter(STATE_ALPHA %in% c("CA")) 
 View(cleangaz)
@@ -57,7 +56,7 @@ Common_feature_name <- count(cleangaz, FEATURE_NAME)
 Common_feature_name[which.max(Common_feature_name$n), 1]
 ```
 
-*The most frequestly ocurring feature name is the church of Christ*
+**The most frequestly ocurring feature name is the church of Christ*
 
 **2.What is the most-frequently-occuring feature class ?**
 
@@ -69,24 +68,11 @@ Common_feature_class[which.min(Common_feature_class$n), 1]
 
 **The most frequestly ocurring feature class is Isthmus*
 
-**3.What is the approximate center point of each county ?**
+**3.What is the approximate center point of each county CPC ?**
 
 ```{r 7}
-setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/")
-View(cleangaz)
-write_csv(cleangaz, "CAGAZ.csv")
 
-county_point <- cleangaz
- group_by(COUNTY_NAME) %>%
-  summarise(
-    latMin = min(PRIM_LAT_DEC, na.rm= TRUE),
-    latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
-    longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
-    longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
-  mutate(lat_center = (latMin + latMax) /2)%>% 
-  mutate(long_center = (longMin + longMax)/2) %>% 
-  select(County = COUNTY_NAME, Latitud = lat_center, 
-         Longitude= long_center)
+
 
 ```
 
