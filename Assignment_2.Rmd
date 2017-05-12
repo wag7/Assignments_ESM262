@@ -47,15 +47,10 @@ filter(STATE_ALPHA %in% c("CA"))
 View(cleangaz)
 ```
 
-**5. Write the gaz tibble to a CSV files (using "|" as a delimiter)**
-
-```{r 5}
-View(cleangaz)
-finalgaz <- read_csv("cleangaz.txt")
-```
 
 ##Part1. Analyze.
-```{r 6}
+```{r 5}
+
 
 ```
 

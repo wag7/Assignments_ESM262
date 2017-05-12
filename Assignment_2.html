@@ -123,8 +123,11 @@ $(document).ready(function () {
 </div>
 
 
-<div id="esm-assignment-2-data-ingest." class="section level2">
-<h2>ESM ASSIGNMENT 2, Data Ingest.</h2>
+<div id="esm-assignment-2." class="section level2">
+<h2>ESM ASSIGNMENT 2.</h2>
+</div>
+<div id="part1.-data-ingest." class="section level2">
+<h2>Part1. Data Ingest.</h2>
 <p><strong>1. Reading the gazetteer data as-is (all columns; no type conversion) into a gaz_raw tibble and keeping only specific columns</strong></p>
 <pre class="r"><code>suppressPackageStartupMessages({
   library(tidyverse)
@@ -188,12 +191,15 @@ as_tibble(gaz)</code></pre>
 <pre class="r"><code>gaz$PRIM_LAT_DEC&lt;- parse_character(gaz$PRIM_LAT_DEC, na=&quot;0&quot;)
 gaz$PRIM_LONG_DEC&lt;- parse_character(gaz$PRIM_LONG_DEC, na=&quot;0&quot;)
 View(gaz)</code></pre>
-<p><strong>3. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA</strong></p>
-<pre class="r"><code>gaz$PRIM_LAT_DEC&lt;- parse_character(gaz$PRIM_LAT_DEC, na=&quot;0&quot;)
-gaz$PRIM_LONG_DEC&lt;- parse_character(gaz$PRIM_LONG_DEC, na=&quot;0&quot;)
-View(gaz)</code></pre>
-<p><strong>4. Delete from gaz rows where:</strong> <em>The primary latitude or longitude are unknown </em>The feature is not in California</p>
-<p><strong>5. Write the gaz tibble to a CSV files (using “|” as a delimiter)</strong></p>
+<p><strong>4. Delete from gaz rows where:</strong></p>
+<p><em>The primary latitude or longitude are unknown </em>The feature is not in California</p>
+<pre class="r"><code>setwd(&quot;/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Assignments_ESM262&quot;)
+cleangaz &lt;- gaz %&gt;%
+filter(STATE_ALPHA %in% c(&quot;CA&quot;)) 
+View(cleangaz)</code></pre>
+</div>
+<div id="part1.-analyze." class="section level2">
+<h2>Part1. Analyze.</h2>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
