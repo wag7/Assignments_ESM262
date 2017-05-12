@@ -45,6 +45,7 @@ View(gaz)
 cleangaz <- gaz %>%
 filter(STATE_ALPHA %in% c("CA")) 
 View(cleangaz)
+write_csv(cleangaz, "GAZCA")
 ```
 
 
