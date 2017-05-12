@@ -49,10 +49,58 @@ View(cleangaz)
 
 
 ##Part1. Analyze.
-```{r 5}
+**1.What is the most-frequently-occuring feature name ?**
 
+```{r 5}
+Common_feature_name <- count(cleangaz, FEATURE_NAME)
+Common_feature_name[which.max(Common_feature_name$n), 1]
+```
+
+*The most frequestly ocurring feature name is the church of Christ*
+
+**2.What is the most-frequently-occuring feature class ?**
+
+
+```{r 6}
+Common_feature_class <- count(cleangaz, FEATURE_CLASS)
+Common_feature_class[which.min(Common_feature_class$n), 1]
+```
+
+**The most frequestly ocurring feature class is Isthmus*
+
+**3.What is the approximate center point of each county ?**
+
+```{r 7}
+center_county -> cleangaz %>%
+  group_by(COUNTY_NAME) %>%
+  summarise(latitude = mean(PRIM_LONG_DEC, na.rm = TRUE),
+            longitude = mean(PRIM_LAT_DEC, na.rm = TRUE),
+            longmax = max(PRIM_LONG_DEC, na.rm = TRUE),
+            longmin = min(PRIM_LAT_DEC, na.rm = TRUE),
+            latmax = max(PRIM_LONG_DEC, na.rm = TRUE),
+            latmin = min(PRIM_LAT_DEC, na.rm = TRUE),
+            lat = (latmax + latmin)/2,
+            long = (longmax + longmin)/2) %>% 
+  select(-c(longmax, latmax, longmin, latmin))
 
 ```
+
+```{r 7}
+
+county_center <- cleangaz
+ county_center <- group_by(COUNTY_NAME)
+  summarise(
+    latMin = min(PRIM_LAT_DEC, na.rm= TRUE),
+    latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
+    longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+    longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
+  mutate(lat_center = (latMin + latMax) /2)%>% 
+  mutate(long_center = (longMin + longMax)/2) %>% 
+  select(County = COUNTY_NAME, Latitud = lat_center, 
+         Longitude= long_center)
+```
+
+
 
 ## Including Plots
 
