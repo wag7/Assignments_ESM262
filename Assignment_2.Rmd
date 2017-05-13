@@ -26,14 +26,16 @@ gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
   colnames(gaz_raw_) [1] <- "ID"
 gaz <- select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
 as_tibble(gaz)
+GAZ <- write_delim(gaz, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/GAZ.csv", delim= "|")
 ```
 
 **2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
 
 ```{r 2}
-gaz$PRIM_LAT_DEC<- parse_character(gaz$PRIM_LAT_DEC, na="0")
-gaz$PRIM_LONG_DEC<- parse_character(gaz$PRIM_LONG_DEC, na="0")
-View(gaz)
+
+GAZ$PRIM_LAT_DEC<- parse_character(GAZ$PRIM_LAT_DEC, na="0")
+GAZ$PRIM_LONG_DEC<- parse_character(GAZ$PRIM_LONG_DEC, na="0")
+View(GAZ)
 ```
 
 **4. Delete from gaz rows where:**
@@ -42,10 +44,9 @@ View(gaz)
 *The feature is not in California
 
 ```{r 4}
-cleangaz <- gaz %>%
+CAGAZ <- GAZ %>%
 filter(STATE_ALPHA %in% c("CA")) 
-View(cleangaz)
-write_delim(cleangaz, "C: /Users/wagnerquiros/DESKTOP/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262", delim= "|")
+View(CAGAZ)
 ```
 
 
@@ -72,9 +73,18 @@ Common_feature_class[which.min(Common_feature_class$n), 1]
 **3.What is the approximate center point of each county CPC ?**
 
 ```{r 7}
+point_center <- GAZ %>%
+  group_by(COUNTY_NAME) %>%
 
-
-
+  summarise(
+    latMin = min(PRIM_LAT_DEC, na.rm= TRUE),
+    latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
+    longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+    longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
+  mutate(lat_center = (latMin + latMax) /2)%>% 
+  mutate(long_center = (longMin + longMax)/2) %>% 
+  select(County = COUNTY_NAME, Latitud = lat_center, 
+         Longitude= long_center)
 ```
 
 
