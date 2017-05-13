@@ -1,0 +1,118 @@
+---
+title: "Assignment_2.Informatics."
+author: "Wagner Quiros Pereira"
+date: "5/9/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ESM ASSIGNMENT 2.
+
+##Part1. Data Ingest.
+
+**1. Reading the gazetteer data as-is (all columns; no type conversion) into a gaz_raw tibble and keeping only specific columns**
+
+```{r 1}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(dplyr)
+  library(magrittr)
+})
+
+gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
+View(gaz_raw_)
+
+
+
+
+
+
+```
+
+
+
+```{r 1}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(dplyr)
+  library(magrittr)
+})
+gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
+  as_tibble(gaz_raw_)
+  colnames(gaz_raw_) [1] <- "ID"
+gaz <- select(gaz_raw_, ID, FEATURE_NAME, FEATURE_CLASS, STATE_ALPHA, COUNTY_NAME, PRIM_LAT_DEC, PRIM_LONG_DEC, SOURCE_LAT_DEC,  SOURCE_LONG_DEC, ELEV_IN_M, MAP_NAME, DATE_CREATED, DATE_EDITED)
+as_tibble(gaz)
+GAZ <- write_delim(gaz, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/GAZ.csv", delim= "|")
+```
+
+**2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
+
+```{r 2}
+CAGAZ <- write_delim(GAZ, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/CAGAZ.csv", delim= "|")
+CAGAZ$PRIM_LAT_DEC<- parse_character(CAGAZ$PRIM_LAT_DEC, na="0")
+CAGAZ$PRIM_LONG_DEC<- parse_character(CAGAZ$PRIM_LONG_DEC, na="0")
+CAGAZ <- filter!(PRIM_LAT_DEC == 'NA' | PRIM_LONG_DEC == 'NA') 
+View(CAGAZ)
+```
+
+**4. Delete from gaz rows where:**
+
+*The primary latitude or longitude are unknown
+*The feature is not in California
+
+```{r 4}
+CAGAZ <- GAZ %>%
+filter(STATE_ALPHA %in% c("CA")) 
+View(CAGAZ)
+```
+
+
+##Part1. Analyze.
+**1.What is the most-frequently-occuring feature name ?**
+
+```{r 5}
+Common_feature_name <- count(CAGAZ, FEATURE_NAME)
+Common_feature_name[which.max(Common_feature_name$n), 1]
+```
+
+**The most frequestly ocurring feature name is the church of Christ*
+
+**2.What is the most-frequently-occuring feature class ?**
+
+
+```{r 6}
+Common_feature_class <- count(CAGAZ, FEATURE_CLASS)
+Common_feature_class[which.min(Common_feature_class$n), 1]
+```
+
+**The most frequestly ocurring feature class is Isthmus*
+
+**3.What is the approximate center point of each county CPC ?**
+
+```{r 7}
+point_center <- CAGAZ
+  group_by(COUNTY_NAME) %>%
+  summarise(latMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+            latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
+            longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+            longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
+  mutate(lat_center = (latMin + latMax) /2)%>% 
+  mutate(long_center = (longMin + longMax)/2) %>% 
+  select(County = COUNTY_NAME, Latitud = lat_center, 
+         Longitude= long_center)
+View(point_center)
+```
+
+**3.What are the fractions of the total number of features in each county that are natural? man-made?**
+
+```{r 8}
+maker <- CAGAZ_complete %>% 
+  group_by(COUNTY_NAME, made_by) %>% 
+  summarise(count = n()) %>% 
+  spread(made_by, count) %>% 
+  mutate(propman = man/(man + nature),
+         propnature = 1-propman) 
+```
