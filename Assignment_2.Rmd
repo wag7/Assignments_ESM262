@@ -35,6 +35,7 @@ GAZ <- write_delim(gaz, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/In
 CAGAZ <- write_delim(GAZ, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/CAGAZ.csv", delim= "|")
 CAGAZ$PRIM_LAT_DEC<- parse_character(CAGAZ$PRIM_LAT_DEC, na="0")
 CAGAZ$PRIM_LONG_DEC<- parse_character(CAGAZ$PRIM_LONG_DEC, na="0")
+
 View(CAGAZ)
 ```
 
