@@ -32,10 +32,10 @@ GAZ <- write_delim(gaz, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/In
 **2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
 
 ```{r 2}
-
-GAZ$PRIM_LAT_DEC<- parse_character(GAZ$PRIM_LAT_DEC, na="0")
-GAZ$PRIM_LONG_DEC<- parse_character(GAZ$PRIM_LONG_DEC, na="0")
-View(GAZ)
+CAGAZ <- write_delim(GAZ, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/CAGAZ.csv", delim= "|")
+CAGAZ$PRIM_LAT_DEC<- parse_character(CAGAZ$PRIM_LAT_DEC, na="0")
+CAGAZ$PRIM_LONG_DEC<- parse_character(CAGAZ$PRIM_LONG_DEC, na="0")
+View(CAGAZ)
 ```
 
 **4. Delete from gaz rows where:**
@@ -54,7 +54,7 @@ View(CAGAZ)
 **1.What is the most-frequently-occuring feature name ?**
 
 ```{r 5}
-Common_feature_name <- count(cleangaz, FEATURE_NAME)
+Common_feature_name <- count(CAGAZ, FEATURE_NAME)
 Common_feature_name[which.max(Common_feature_name$n), 1]
 ```
 
@@ -64,7 +64,7 @@ Common_feature_name[which.max(Common_feature_name$n), 1]
 
 
 ```{r 6}
-Common_feature_class <- count(cleangaz, FEATURE_CLASS)
+Common_feature_class <- count(CAGAZ, FEATURE_CLASS)
 Common_feature_class[which.min(Common_feature_class$n), 1]
 ```
 
@@ -73,36 +73,26 @@ Common_feature_class[which.min(Common_feature_class$n), 1]
 **3.What is the approximate center point of each county CPC ?**
 
 ```{r 7}
-point_center <- GAZ %>%
+point_center <- CAGAZ
   group_by(COUNTY_NAME) %>%
-
-  summarise(
-    latMin = min(PRIM_LAT_DEC, na.rm= TRUE),
-    latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
-    longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
-    longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
+  summarise(latMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+            latMax = max(PRIM_LAT_DEC, na.rm= TRUE),
+            longMin = min(PRIM_LONG_DEC, na.rm= TRUE),
+            longMax = max(PRIM_LONG_DEC, na.rm= TRUE)) %>% 
   mutate(lat_center = (latMin + latMax) /2)%>% 
   mutate(long_center = (longMin + longMax)/2) %>% 
   select(County = COUNTY_NAME, Latitud = lat_center, 
          Longitude= long_center)
+View(point_center)
 ```
 
-
-
+**3.What are the fractions of the total number of features in each county that are natural? man-made?**
 
 ```{r 8}
-
-
-
+maker <- CAGAZ_complete %>% 
+  group_by(COUNTY_NAME, made_by) %>% 
+  summarise(count = n()) %>% 
+  spread(made_by, count) %>% 
+  mutate(propman = man/(man + nature),
+         propnature = 1-propman) 
 ```
-
-  
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
