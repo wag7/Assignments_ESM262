@@ -22,8 +22,41 @@ suppressPackageStartupMessages({
   library(magrittr)
 })
 
-gaz_raw_<- read_delim("CA_Features_20170401.zip", delim = "|")
-View(gaz_raw_)
+gaz_raw<- read_delim("CA_Features_20170401.zip", delim = "|")
+View(gaz_raw)
+gaz <- gaz_raw %>% 
+  select (-COUNTY_NUMERIC, STATE_NUMERIC, PRIMARY_LAT_DMS, PRIM_LONG_DMS, SOURCE_LAT_DMS, SOURCE_LONG_DMS, ELEV_IN_FT) %>% 
+  mutate(DATE_CREATED = as.Date(DATE_CREATED, format= "%m/%d/%Y"), 
+         DATE_EDITED = as.Date(DATE_EDITED, format= "%m/%d/%Y" ))
+as_tibble(gaz_raw)
+```
+
+**2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
+
+```{r 2}
+gaz$PRIM_LAT_DEC <- ifelse(gaz$PRIM_LAT_DEC == 0, NA, gaz$PRIM_LAT_DEC)
+gaz$PRIM_LONG_DEC <- ifelse(gaz$PRIM_LONG_DEC == 0, NA, gaz$PRIM_LONG_DEC)
+gaz$MAP_NAME <- ifelse(gaz$MAP_NAME =='Unknown', NA, gaz$MAP_NAME)
+as_tibble(gaz)
+View(gaz)
+```
+
+**3. Selecting main observations**
+
+```{r 3}
+gaz <- gaz %>%
+  filter(!(PRIM_LAT_DEC == 'NA' | PRIM_LONG_DEC == 'NA')) %>% 
+  filter(STATE_ALPHA == 'CA')
+View(gaz)
+```
+
+**4. Saving clean up doc with delim |**
+
+```{r 4}
+write_delim(gaz, "/USERS/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/gazzca.csv", delim = "|")
+```
+
+write_delim(gaz, "C:/Users/Ignacia Rivera/Dropbox/MESM/Quarter VI/ComputingForEnvScience/Rivera_ESM262/HW2/gaz.csv", delim= "|")
 
 
 
@@ -48,7 +81,7 @@ as_tibble(gaz)
 GAZ <- write_delim(gaz, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/GAZ.csv", delim= "|")
 ```
 
-**2. Converting the gaz columns to the appropriate type, and any placeholders for unknown data to NA**
+
 
 ```{r 2}
 CAGAZ <- write_delim(GAZ, "/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/newprojects/Assignments_ESM262/CAGAZ.csv", delim= "|")
