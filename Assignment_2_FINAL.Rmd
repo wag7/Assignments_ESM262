@@ -2,7 +2,7 @@
 title: "Assignment_2.Informatics."
 author: "Wagner Quiros Pereira"
 date: "5/9/2017"
-output: word_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
