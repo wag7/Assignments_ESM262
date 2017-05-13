@@ -237,9 +237,620 @@ Features_type &lt;- gaz_complete%&gt;%
   mutate(fraction_natural = natural/total) %&gt;% 
   mutate(fraction_manmade = 1 - fraction_natural) %&gt;% 
   select(County= COUNTY_NAME, Natural= fraction_natural, Man_Made= fraction_manmade)</code></pre>
-<pre class="r"><code>View(c_county_point)
-Table1 &lt;- table(c_county_point)
-View(Table1)</code></pre>
+<pre class="r"><code>kable(c_county_point)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">County</th>
+<th align="right">Latitud</th>
+<th align="right">Longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alameda</td>
+<td align="right">37.68525</td>
+<td align="right">-121.9243</td>
+</tr>
+<tr class="even">
+<td align="left">Alpine</td>
+<td align="right">37.61799</td>
+<td align="right">-118.2290</td>
+</tr>
+<tr class="odd">
+<td align="left">Amador</td>
+<td align="right">38.35542</td>
+<td align="right">-121.0613</td>
+</tr>
+<tr class="even">
+<td align="left">Butte</td>
+<td align="right">39.72335</td>
+<td align="right">-121.5716</td>
+</tr>
+<tr class="odd">
+<td align="left">Calaveras</td>
+<td align="right">36.46287</td>
+<td align="right">-119.8929</td>
+</tr>
+<tr class="even">
+<td align="left">Colusa</td>
+<td align="right">39.16739</td>
+<td align="right">-122.2780</td>
+</tr>
+<tr class="odd">
+<td align="left">Contra Costa</td>
+<td align="right">37.90659</td>
+<td align="right">-121.9944</td>
+</tr>
+<tr class="even">
+<td align="left">Del Norte</td>
+<td align="right">41.69998</td>
+<td align="right">-123.9550</td>
+</tr>
+<tr class="odd">
+<td align="left">El Dorado</td>
+<td align="right">37.97298</td>
+<td align="right">-121.4447</td>
+</tr>
+<tr class="even">
+<td align="left">Fresno</td>
+<td align="right">36.74745</td>
+<td align="right">-119.6338</td>
+</tr>
+<tr class="odd">
+<td align="left">Glenn</td>
+<td align="right">39.62933</td>
+<td align="right">-122.4071</td>
+</tr>
+<tr class="even">
+<td align="left">Humboldt</td>
+<td align="right">40.65793</td>
+<td align="right">-122.0243</td>
+</tr>
+<tr class="odd">
+<td align="left">Imperial</td>
+<td align="right">33.05796</td>
+<td align="right">-115.2855</td>
+</tr>
+<tr class="even">
+<td align="left">Inyo</td>
+<td align="right">36.60175</td>
+<td align="right">-117.2923</td>
+</tr>
+<tr class="odd">
+<td align="left">Kern</td>
+<td align="right">35.34304</td>
+<td align="right">-119.4605</td>
+</tr>
+<tr class="even">
+<td align="left">Kings</td>
+<td align="right">36.13049</td>
+<td align="right">-119.8870</td>
+</tr>
+<tr class="odd">
+<td align="left">Lake</td>
+<td align="right">39.13503</td>
+<td align="right">-122.7503</td>
+</tr>
+<tr class="even">
+<td align="left">Lassen</td>
+<td align="right">40.46185</td>
+<td align="right">-120.8094</td>
+</tr>
+<tr class="odd">
+<td align="left">Los Angeles</td>
+<td align="right">35.08041</td>
+<td align="right">-118.9973</td>
+</tr>
+<tr class="even">
+<td align="left">Madera</td>
+<td align="right">36.04061</td>
+<td align="right">-119.7934</td>
+</tr>
+<tr class="odd">
+<td align="left">Marin</td>
+<td align="right">36.83411</td>
+<td align="right">-121.9622</td>
+</tr>
+<tr class="even">
+<td align="left">Mariposa</td>
+<td align="right">37.24062</td>
+<td align="right">-119.3346</td>
+</tr>
+<tr class="odd">
+<td align="left">Mendocino</td>
+<td align="right">39.38642</td>
+<td align="right">-123.4288</td>
+</tr>
+<tr class="even">
+<td align="left">Merced</td>
+<td align="right">37.18383</td>
+<td align="right">-120.6907</td>
+</tr>
+<tr class="odd">
+<td align="left">Modoc</td>
+<td align="right">41.58628</td>
+<td align="right">-120.7315</td>
+</tr>
+<tr class="even">
+<td align="left">Mono</td>
+<td align="right">38.06252</td>
+<td align="right">-118.9393</td>
+</tr>
+<tr class="odd">
+<td align="left">Monterey</td>
+<td align="right">36.33260</td>
+<td align="right">-121.1135</td>
+</tr>
+<tr class="even">
+<td align="left">Napa</td>
+<td align="right">38.49838</td>
+<td align="right">-122.3625</td>
+</tr>
+<tr class="odd">
+<td align="left">Nevada</td>
+<td align="right">39.26712</td>
+<td align="right">-120.6413</td>
+</tr>
+<tr class="even">
+<td align="left">Orange</td>
+<td align="right">33.66613</td>
+<td align="right">-117.7801</td>
+</tr>
+<tr class="odd">
+<td align="left">Placer</td>
+<td align="right">39.03074</td>
+<td align="right">-120.7767</td>
+</tr>
+<tr class="even">
+<td align="left">Plumas</td>
+<td align="right">37.34911</td>
+<td align="right">-119.4346</td>
+</tr>
+<tr class="odd">
+<td align="left">Riverside</td>
+<td align="right">36.14524</td>
+<td align="right">-118.4051</td>
+</tr>
+<tr class="even">
+<td align="left">Sacramento</td>
+<td align="right">39.09157</td>
+<td align="right">-121.6143</td>
+</tr>
+<tr class="odd">
+<td align="left">San Benito</td>
+<td align="right">36.59107</td>
+<td align="right">-121.1142</td>
+</tr>
+<tr class="even">
+<td align="left">San Bernardino</td>
+<td align="right">35.87137</td>
+<td align="right">-117.8211</td>
+</tr>
+<tr class="odd">
+<td align="left">San Diego</td>
+<td align="right">35.16475</td>
+<td align="right">-119.2360</td>
+</tr>
+<tr class="even">
+<td align="left">San Francisco</td>
+<td align="right">36.00691</td>
+<td align="right">-120.8974</td>
+</tr>
+<tr class="odd">
+<td align="left">San Joaquin</td>
+<td align="right">37.89854</td>
+<td align="right">-121.2530</td>
+</tr>
+<tr class="even">
+<td align="left">San Luis Obispo</td>
+<td align="right">35.35580</td>
+<td align="right">-120.4077</td>
+</tr>
+<tr class="odd">
+<td align="left">San Mateo</td>
+<td align="right">37.39077</td>
+<td align="right">-122.3197</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Barbara</td>
+<td align="right">33.96514</td>
+<td align="right">-119.5775</td>
+</tr>
+<tr class="odd">
+<td align="left">Santa Clara</td>
+<td align="right">38.88102</td>
+<td align="right">-121.8937</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Cruz</td>
+<td align="right">35.63555</td>
+<td align="right">-120.4298</td>
+</tr>
+<tr class="odd">
+<td align="left">Shasta</td>
+<td align="right">40.78738</td>
+<td align="right">-121.6522</td>
+</tr>
+<tr class="even">
+<td align="left">Sierra</td>
+<td align="right">37.37716</td>
+<td align="right">-120.5399</td>
+</tr>
+<tr class="odd">
+<td align="left">Siskiyou</td>
+<td align="right">41.50110</td>
+<td align="right">-122.5810</td>
+</tr>
+<tr class="even">
+<td align="left">Solano</td>
+<td align="right">36.13968</td>
+<td align="right">-120.5618</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonoma</td>
+<td align="right">38.46991</td>
+<td align="right">-122.5055</td>
+</tr>
+<tr class="even">
+<td align="left">Stanislaus</td>
+<td align="right">37.61389</td>
+<td align="right">-120.9406</td>
+</tr>
+<tr class="odd">
+<td align="left">Sutter</td>
+<td align="right">39.03162</td>
+<td align="right">-121.6965</td>
+</tr>
+<tr class="even">
+<td align="left">Tehama</td>
+<td align="right">40.05988</td>
+<td align="right">-122.1986</td>
+</tr>
+<tr class="odd">
+<td align="left">Trinity</td>
+<td align="right">40.66529</td>
+<td align="right">-123.0399</td>
+</tr>
+<tr class="even">
+<td align="left">Tulare</td>
+<td align="right">36.29215</td>
+<td align="right">-118.7800</td>
+</tr>
+<tr class="odd">
+<td align="left">Tuolumne</td>
+<td align="right">39.00205</td>
+<td align="right">-121.5801</td>
+</tr>
+<tr class="even">
+<td align="left">Ventura</td>
+<td align="right">34.04778</td>
+<td align="right">-119.1644</td>
+</tr>
+<tr class="odd">
+<td align="left">Yolo</td>
+<td align="right">38.63463</td>
+<td align="right">-121.9447</td>
+</tr>
+<tr class="even">
+<td align="left">Yuba</td>
+<td align="right">39.27781</td>
+<td align="right">-121.3127</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">37.96936</td>
+<td align="right">-122.4480</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(Features_type)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">County</th>
+<th align="right">Natural</th>
+<th align="right">Man_Made</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alameda</td>
+<td align="right">0.0823032</td>
+<td align="right">0.9176968</td>
+</tr>
+<tr class="even">
+<td align="left">Alpine</td>
+<td align="right">0.5418895</td>
+<td align="right">0.4581105</td>
+</tr>
+<tr class="odd">
+<td align="left">Amador</td>
+<td align="right">0.2852405</td>
+<td align="right">0.7147595</td>
+</tr>
+<tr class="even">
+<td align="left">Butte</td>
+<td align="right">0.3648449</td>
+<td align="right">0.6351551</td>
+</tr>
+<tr class="odd">
+<td align="left">Calaveras</td>
+<td align="right">0.2957746</td>
+<td align="right">0.7042254</td>
+</tr>
+<tr class="even">
+<td align="left">Colusa</td>
+<td align="right">0.4952199</td>
+<td align="right">0.5047801</td>
+</tr>
+<tr class="odd">
+<td align="left">Contra Costa</td>
+<td align="right">0.1646374</td>
+<td align="right">0.8353626</td>
+</tr>
+<tr class="even">
+<td align="left">Del Norte</td>
+<td align="right">0.5154799</td>
+<td align="right">0.4845201</td>
+</tr>
+<tr class="odd">
+<td align="left">El Dorado</td>
+<td align="right">0.3872449</td>
+<td align="right">0.6127551</td>
+</tr>
+<tr class="even">
+<td align="left">Fresno</td>
+<td align="right">0.4125594</td>
+<td align="right">0.5874406</td>
+</tr>
+<tr class="odd">
+<td align="left">Glenn</td>
+<td align="right">0.4557439</td>
+<td align="right">0.5442561</td>
+</tr>
+<tr class="even">
+<td align="left">Humboldt</td>
+<td align="right">0.5501607</td>
+<td align="right">0.4498393</td>
+</tr>
+<tr class="odd">
+<td align="left">Imperial</td>
+<td align="right">0.6144144</td>
+<td align="right">0.3855856</td>
+</tr>
+<tr class="even">
+<td align="left">Inyo</td>
+<td align="right">0.5236092</td>
+<td align="right">0.4763908</td>
+</tr>
+<tr class="odd">
+<td align="left">Kern</td>
+<td align="right">0.3113703</td>
+<td align="right">0.6886297</td>
+</tr>
+<tr class="even">
+<td align="left">Kings</td>
+<td align="right">0.3360544</td>
+<td align="right">0.6639456</td>
+</tr>
+<tr class="odd">
+<td align="left">Lake</td>
+<td align="right">0.5402884</td>
+<td align="right">0.4597116</td>
+</tr>
+<tr class="even">
+<td align="left">Lassen</td>
+<td align="right">0.5313577</td>
+<td align="right">0.4686423</td>
+</tr>
+<tr class="odd">
+<td align="left">Los Angeles</td>
+<td align="right">0.1084098</td>
+<td align="right">0.8915902</td>
+</tr>
+<tr class="even">
+<td align="left">Madera</td>
+<td align="right">0.3800000</td>
+<td align="right">0.6200000</td>
+</tr>
+<tr class="odd">
+<td align="left">Marin</td>
+<td align="right">0.2585079</td>
+<td align="right">0.7414921</td>
+</tr>
+<tr class="even">
+<td align="left">Mariposa</td>
+<td align="right">0.4965920</td>
+<td align="right">0.5034080</td>
+</tr>
+<tr class="odd">
+<td align="left">Mendocino</td>
+<td align="right">0.5610329</td>
+<td align="right">0.4389671</td>
+</tr>
+<tr class="even">
+<td align="left">Merced</td>
+<td align="right">0.3476357</td>
+<td align="right">0.6523643</td>
+</tr>
+<tr class="odd">
+<td align="left">Modoc</td>
+<td align="right">0.5182972</td>
+<td align="right">0.4817028</td>
+</tr>
+<tr class="even">
+<td align="left">Mono</td>
+<td align="right">0.5180636</td>
+<td align="right">0.4819364</td>
+</tr>
+<tr class="odd">
+<td align="left">Monterey</td>
+<td align="right">0.3540573</td>
+<td align="right">0.6459427</td>
+</tr>
+<tr class="even">
+<td align="left">Napa</td>
+<td align="right">0.3318486</td>
+<td align="right">0.6681514</td>
+</tr>
+<tr class="odd">
+<td align="left">Nevada</td>
+<td align="right">0.3674797</td>
+<td align="right">0.6325203</td>
+</tr>
+<tr class="even">
+<td align="left">Orange</td>
+<td align="right">0.0847971</td>
+<td align="right">0.9152029</td>
+</tr>
+<tr class="odd">
+<td align="left">Placer</td>
+<td align="right">0.3444508</td>
+<td align="right">0.6555492</td>
+</tr>
+<tr class="even">
+<td align="left">Plumas</td>
+<td align="right">0.5429757</td>
+<td align="right">0.4570243</td>
+</tr>
+<tr class="odd">
+<td align="left">Riverside</td>
+<td align="right">0.2173482</td>
+<td align="right">0.7826518</td>
+</tr>
+<tr class="even">
+<td align="left">Sacramento</td>
+<td align="right">0.0446970</td>
+<td align="right">0.9553030</td>
+</tr>
+<tr class="odd">
+<td align="left">San Benito</td>
+<td align="right">0.4872180</td>
+<td align="right">0.5127820</td>
+</tr>
+<tr class="even">
+<td align="left">San Bernardino</td>
+<td align="right">0.2640118</td>
+<td align="right">0.7359882</td>
+</tr>
+<tr class="odd">
+<td align="left">San Diego</td>
+<td align="right">0.1724342</td>
+<td align="right">0.8275658</td>
+</tr>
+<tr class="even">
+<td align="left">San Francisco</td>
+<td align="right">0.0692156</td>
+<td align="right">0.9307844</td>
+</tr>
+<tr class="odd">
+<td align="left">San Joaquin</td>
+<td align="right">0.1422652</td>
+<td align="right">0.8577348</td>
+</tr>
+<tr class="even">
+<td align="left">San Luis Obispo</td>
+<td align="right">0.3723012</td>
+<td align="right">0.6276988</td>
+</tr>
+<tr class="odd">
+<td align="left">San Mateo</td>
+<td align="right">0.1711230</td>
+<td align="right">0.8288770</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Barbara</td>
+<td align="right">0.3333333</td>
+<td align="right">0.6666667</td>
+</tr>
+<tr class="odd">
+<td align="left">Santa Clara</td>
+<td align="right">0.1416877</td>
+<td align="right">0.8583123</td>
+</tr>
+<tr class="even">
+<td align="left">Santa Cruz</td>
+<td align="right">0.2543253</td>
+<td align="right">0.7456747</td>
+</tr>
+<tr class="odd">
+<td align="left">Shasta</td>
+<td align="right">0.5345603</td>
+<td align="right">0.4654397</td>
+</tr>
+<tr class="even">
+<td align="left">Sierra</td>
+<td align="right">0.4207650</td>
+<td align="right">0.5792350</td>
+</tr>
+<tr class="odd">
+<td align="left">Siskiyou</td>
+<td align="right">0.6145475</td>
+<td align="right">0.3854525</td>
+</tr>
+<tr class="even">
+<td align="left">Solano</td>
+<td align="right">0.2327869</td>
+<td align="right">0.7672131</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonoma</td>
+<td align="right">0.2923833</td>
+<td align="right">0.7076167</td>
+</tr>
+<tr class="even">
+<td align="left">Stanislaus</td>
+<td align="right">0.2580927</td>
+<td align="right">0.7419073</td>
+</tr>
+<tr class="odd">
+<td align="left">Sutter</td>
+<td align="right">0.2390671</td>
+<td align="right">0.7609329</td>
+</tr>
+<tr class="even">
+<td align="left">Tehama</td>
+<td align="right">0.5362319</td>
+<td align="right">0.4637681</td>
+</tr>
+<tr class="odd">
+<td align="left">Trinity</td>
+<td align="right">0.6309897</td>
+<td align="right">0.3690103</td>
+</tr>
+<tr class="even">
+<td align="left">Tulare</td>
+<td align="right">0.4009885</td>
+<td align="right">0.5990115</td>
+</tr>
+<tr class="odd">
+<td align="left">Tuolumne</td>
+<td align="right">0.4601449</td>
+<td align="right">0.5398551</td>
+</tr>
+<tr class="even">
+<td align="left">Ventura</td>
+<td align="right">0.2307359</td>
+<td align="right">0.7692641</td>
+</tr>
+<tr class="odd">
+<td align="left">Yolo</td>
+<td align="right">0.2865248</td>
+<td align="right">0.7134752</td>
+</tr>
+<tr class="even">
+<td align="left">Yuba</td>
+<td align="right">0.3316750</td>
+<td align="right">0.6683250</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0.5000000</td>
+<td align="right">0.5000000</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
