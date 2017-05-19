@@ -18,9 +18,9 @@ library(lubridate)
 ```
 
 
-"Part 1. Clim Figure with Temperature and Rain"
+**Part 1 and 2. Clim Figure with Temperature and Rain**
 
-```{r 1, fig.align='center'}
+```{r plot 1, fig.align='center'}
 #Monthly average temperature from tmax and tmin
 clim$avg.temp <- (clim$tmin + clim$tmax)/2
 
@@ -45,157 +45,53 @@ Figure_2
 grid.arrange(Figure_1, Figure_2)
 ```
 
-"Part 2. Thindeep Figure "
+**Part 3. Thindeep figure with shared and different thinning**
 
 
-**BIOMASS OVER TIME BEHAVIOR**
-```{r color}
-View(thindeep)
-p1=ggplot(thindeep, aes(x=as.factor(wy), y=plantc))+geom_boxplot()
+```{r plot 2}
+p1=ggplot(thindeep, aes(x=as.factor(wy), y=plantc, fill=as.factor(shared)))+geom_boxplot() +theme_bw()
 p1 = p1+labs(x="Years since thinning", y="Biomass")
-p1 = p1 +theme(axis.text= element_text(face="bold", size=14), 
-               plot.margin = unit(c(15,15,15,5),"pt"), axis.title = element_text(size=14))
+p1 = p1 +theme(axis.text= element_text(face="bold", size=12), 
+               plot.margin = unit(c(15,15,15,5),"pt"), axis.title = element_text(size=12))
 p1
-# but boxplots include all thinning intensities - maybe we want to separate those out
-
-p1=ggplot(thindeep, aes(x=as.factor(wy), y=plantc, col=as.factor(thin)))+geom_boxplot()
-p1 = p1+labs(x="Years since thinning", y="Biomass")
-p1 = p1 +theme(axis.text= element_text(face="bold", size=14), 
-               plot.margin = unit(c(15,15,15,5),"pt"), axis.title = element_text(size=14))
-
-# or we could base the filling of the boxplots on thinning intensity
-
-p1=ggplot(thindeep, aes(x=as.factor(wy), y=plantc, fill=as.factor(thin)))+geom_boxplot()
-p1 = p1+labs(x="Years since thinning", y="Biomass")
-p1 = p1 +theme(axis.text= element_text(face="bold", size=14), 
-               plot.margin = unit(c(15,15,15,5),"pt"), axis.title = element_text(size=14))
-p1
-
+p2= p1+facet_wrap(~as.factor(thin))
+p2
 ```
 
+**Part 4. Thindeep figure with shared and different thinning**
+```{r plot 3}
 
-
-
-This is a good opporutnity to play witht e legend a little, we can use *theme* again to control formatting
-and *scale_color_discrete* to control content
-There are many other ways to change color maps - see
-
-* *scale_colour_hue*
-* *scale_fill_hue*
-* *scale_color_brewer*
-* *scale_color_brewer*
-
-Brewer is really cool and comes up with nice options for you  and gives
-you a menu of color scheme for sequential vs divergin vs qualitative data and 
-has optins that are printer friendly, color blind friendly 
--to check it out - 
-
-* [colors that work](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
-* [implemented R color palettes](https://www.r-bloggers.com/choosing-colour-palettes-part-ii-educated-choices/)
-* [more R and colors](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/)
-
-or for continues
-* *scale_color_continuous*
-
-```{r legendsandstuff}
-
-# assuming qualitative
- p1 + scale_fill_brewer(type="qual", palette="Dark2")
- p1 + scale_fill_brewer(type="qual", palette="Set3")
- 
-# but actually sequential so can using diverging palettes - diverse from center
- p1 + scale_fill_brewer(type="div", palette="PiYG")
- 
- # but actually sequential so can using diverging palettes - diverse from center
-  p1 + scale_fill_brewer(type="seq", palette="BuGn")
-
- # and can add names
-   lnms = c("None","Low","Med","High")
-   p1 + scale_fill_brewer(type="seq", palette="BuGn", name="Thin Intensity", labels=lnms)
-   
-# using themes to change legend format - position. CHANGE LEGEND.
-    p1 + scale_fill_brewer(type="seq", palette="BuGn", name="Thin Intensity", labels=lnms) +
-      theme(legend.position="bottom")
-    
-     p1 + scale_fill_brewer(type="seq", palette="BuGn", name="Thin Intensity", labels=lnms) +
-       theme(legend.position=c(0.1,0.9)) #locates the quadrant of the legend.
-     
-  p1 + scale_fill_brewer(type="seq", palette="BuGn", name="Thin Intensity", labels=lnms) +
-       theme(legend.position=c(0.1,0.9), legend.background=element_rect(fill="seashell2"))    
-        
-```
-
-We can also use ggplot to automatically summarize graph and added to our plot
-Lets say we also want to show the means as lines
-
-
-```{r summaries}
-
-# what if we just want means
-# there are multiple ways to do this but 
-
-p1=ggplot(thindeep, aes(x=wy, y=plantc, col=as.factor(thin)))+stat_summary(fun.y="mean", geom="line")
+p1=ggplot(thindeep, aes(x=scen, y=trans, col=as.factor(thin)))+theme_bw()+labs(x="", y="Transpiration") + theme(axis.text.x=element_blank())+
+  theme(axis.ticks.x=element_blank()) + stat_summary(fun.y="mean", geom="line")
 p1 = p1 +theme(axis.text= element_text(face="bold", size=14))
-p1 + scale_color_brewer(type="div", palette="Spectral", name="Thin Intensity", labels=lnms) +
-       theme(legend.position=c(0.1,0.9), legend.background=element_rect(fill="seashell2"))    
-
-# we also might want to separate out our two different types of thinning - indicated by shared
-p1=ggplot(thindeep, aes(x=wy, y=plantc, col=as.factor(thin), type=shared))+stat_summary(fun.y="mean", geom="line", aes(linetype=shared))
-p1 = p1 +theme(axis.text= element_text(face="bold", size=14))
-p1 + scale_color_brewer(type="div", palette="Spectral", name="Thin Intensity", labels=lnms) + 
-  scale_linetype(name="Thin Type", labels=c("Spaced","Clustered"))
-
-#averaging by year and then fitting a curve        
-p1 = ggplot(clim, aes(y=tmax,x=year))+stat_summary(fun.y="mean", geom="point")+stat_smooth()
-p1
-# we can also combined bar plots and line summaries (and deal with different axis)
-# we need to transform to get similar scales
-
-p1 = ggplot(clim) + geom_bar(aes(x=year,y=rain), stat="summary", fun.y="sum") + ggtitle("Rain")
-p1
-p2 = ggplot(clim) + geom_line(aes(x=year, y=tmax), stat="summary", fun.y="mean") + ggtitle("Temp")
-p2
-grid.arrange(p1,p2)
-p2 + geom_line(aes(x=year, y=tmin), stat="summary", fun.y="mean")
-
-# estimate scaling so that we can pput the values in the same range.
-scl = 3000/15
-# add some labels
-
-p = ggplot(clim) + geom_bar(aes(x=year,y=rain), stat="summary", fun.y="sum",  fill="cyan") + 
-  geom_line(aes(x=year, y=tmax*scl), stat="summary", fun.y="mean", col="red") 
-p 
-p=p+ scale_y_continuous(sec.axis = sec_axis(~./scl, name=expression(paste("Maximum Temperature ",C**degree)))) + 
-  labs(x="Year", y="Rainfall (mm/yr)")
-p
 
 
-# annotation. Put text on the plot.!! COOL.!!
-p = ggplot(clim) + geom_bar(aes(x=year,y=rain), stat="summary", fun.y="sum",  fill="cyan") + 
-  geom_line(aes(x=year, y=tmax*scl), stat="summary", fun.y="mean", col="red") 
-p=p+ scale_y_continuous(sec.axis = sec_axis(~./scl, name=expression(paste("Maximum Temperature ",C**degree)))) + 
-  labs(x="Year", y="Rainfall (mm/yr)")
-p = p+ annotate("text", x=1990, y=500, label="Precip", colour="blue", size=6, hjust=0.5)
-p = p+ annotate("text", x=1940, y=2700, label="Temperature", colour="red", size=6, hjust=0)
-p
-
+p2=ggplot(thindeep, aes(x=scen, y=evap, col=as.factor(thin)))+theme_bw()+labs(x="Year", y="Evaporation") + stat_summary(fun.y="mean", geom="line")
+p2 = p2 +theme(axis.text= element_text(face="bold", size=14))
+p2 + scale_color_brewer(type="div", palette="Spectral", name="Thin Intensity", labels=lnms) +
+       theme(legend.position=c(0.9,0.2), legend.background=element_rect(fill="seashell2")) 
+grid.arrange(p1, p2)
 ```
 
-Now lets try *facets*  which allow you to separate things into different graphs
-lets say we wanted a separate graph for each thinning intensity so  we could see how decade impacted recovery
 
-```{r facet}
-# first lets color by decade/scenario. Facet creates multiple graphs base on a dimension!!!Secen is the DECADE.
-p2 = ggplot(thindeep, aes(x=wy, y=plantc, col=as.factor(scen)))+ stat_summary(fun.y="mean",geom="line", aes(col=as.factor(scen)))
-p2
-# now lets separate out the thinning intensities
-p2= p2+facet_wrap(~as.factor(thin))
-p2
 
-# make prettier
-p2 = ggplot(thindeep, aes(x=wy, y=plantc, col=as.factor(scen)))+ stat_summary(fun.y="mean",geom="line", size=2, aes(col=as.factor(scen)))
-p2= p2+facet_wrap(~as.factor(thin)) 
-p2 + scale_color_brewer(type="qual", palette="Set3", name="Decade") 
-p2
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
