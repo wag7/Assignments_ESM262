@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}
-setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Assignments_ESM262/esm262/docs/wk04_ggplot")
+setwd("/Users/wagnerquiros/Desktop/UCSB/Courses/Spring 2017/Informatics/Informatics_Repository/docs/wk04_ggplot_/data")
 thinshallow = read.table("data/resthin.shallow.txt", header=T)
 thindeep = read.table("data/resthin.deep.txt", header=T)
 clim = read.table("data/sierraclim.txt", header = T)
